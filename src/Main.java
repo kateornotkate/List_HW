@@ -48,23 +48,24 @@ public class Main {
                         break;
                     }
                     try {
-                        numItem = Integer.parseInt(stringInput);
-                    } catch (NumberFormatException e) {
-                    }
-                    boolean isDeleted = false;
-                    for (int j = 0; j < shopList.size(); j++) {
-                        String item = shopList.get(j);
-                        if ((numItem - 1) == j || stringInput.toLowerCase().equals(item.toLowerCase())) {
-                            shopList.remove(j);
-                            isDeleted = true;
+                        numItem = Integer.parseInt(stringInput) - 1;
+                        if (numItem < shopList.size()) {
+                            String item = shopList.get(numItem);
+                            shopList.remove(item);
                             System.out.println("Покупка " + item + " удалена.");
-                            break;
+                        } else {
+                            System.out.println("Такого товара в списке покупок нет.");
                         }
+                    } catch (NumberFormatException e) {
+                        if (shopList.contains(stringInput)) {
+                            shopList.remove(stringInput);
+                            System.out.println("Покупка " + stringInput + " удалена.");
+                        } else {
+                            System.out.println("Такого товара в списке покупок нет.");
+                        }
+                    } finally {
+                        printList(shopList);
                     }
-                    if (!isDeleted) {
-                        System.out.println("Такого товара в списке покупок нет.");
-                    }
-                    printList(shopList);
                     break;
                 case 4:
                     System.out.println("Введите текст для поиска:");
@@ -78,7 +79,7 @@ public class Main {
                     }
                     break;
                 default:
-                    System.out.println("Такой операции нет");
+                    System.out.println("Такой операции нет.");
             }
         }
     }
